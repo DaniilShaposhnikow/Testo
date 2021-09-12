@@ -96,6 +96,7 @@ public class PizzaFragment extends Fragment {
         adapter=null;
         adapter = new CaptionedImagesAdapter(db.selectAll("Pizza"));
         adapter.notifyDataSetChanged();
+        rv.setAdapter(adapter);
     }
 
 }

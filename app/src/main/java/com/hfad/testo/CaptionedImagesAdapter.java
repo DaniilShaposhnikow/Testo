@@ -45,8 +45,7 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
         ImageView imageView = (ImageView) cardView.findViewById(R.id.info_image);
        // Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), list.get(position).getImageResourceId());
         //imageView.setImageDrawable(drawable);
-        Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getImageResourceId().getPath(),null);
-        imageView.setImageBitmap(bitmap);
+        imageView.setImageURI(list.get(position).getImageResourceId());
         imageView.setContentDescription(list.get(position).getName());
         TextView textView = (TextView) cardView.findViewById(R.id.info_text);
         textView.setText(list.get(position).getName());

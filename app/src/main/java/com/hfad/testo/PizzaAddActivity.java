@@ -80,7 +80,7 @@ public class PizzaAddActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent data = new Intent();
                 data.putExtra(PizzaFragment.NANE_PIZZA, addd.getText().toString());
-                data.putExtra(PizzaFragment.URI_PIZZA, uri);
+                data.putExtra(PizzaFragment.URI_PIZZA, uri.toString());
                 setResult(RESULT_OK, data);
                 finish();
             }
