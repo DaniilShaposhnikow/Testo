@@ -35,6 +35,7 @@ public class PizzaFragment extends Fragment {
     private DBHelper db;
     private AppCompatButton add;
     private RecyclerView rv;
+    private CaptionedImagesAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -53,7 +54,7 @@ public class PizzaFragment extends Fragment {
 //            pizzaImages[i] = Pizza.pizzas[i].getImageResourceId();
 //        }
         db=new DBHelper(getActivity());
-        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(db.selectAll("Pizza"));
+        adapter = new CaptionedImagesAdapter(db.selectAll("Pizza"));
         rv=pizzaRecycler.findViewById(R.id.pizza_recycler);
         rv.setAdapter(adapter);
 //        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
@@ -89,6 +90,11 @@ public class PizzaFragment extends Fragment {
             }
         }
     });
-
+    private void UpdateAdapter()
+    {
+        adapter=null;
+        adapter = new CaptionedImagesAdapter(db.selectAll("Pizza"));
+        adapter.notifyDataSetChanged();
+    }
 
 }
