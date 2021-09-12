@@ -87,6 +87,7 @@ public class PizzaFragment extends Fragment {
                 String name = intent.getStringExtra(NANE_PIZZA);
                 Uri uri=Uri.parse(intent.getStringExtra(URI_PIZZA));
                 db.insertDrink(name,uri.toString(),"Pizza");
+                UpdateAdapter();
             }
         }
     });
