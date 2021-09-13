@@ -37,6 +37,10 @@
     <string name="Photo">Photo</string>
     <string name="Ok">Ok</string>
     <string name="Cancel">Cancel</string>
+    
+    <string name="PhotoPasta">Photo</string> 
+    <string name="OkPasta">Ok</string>
+    <string name="CancelPasta">Cancel</string>
 
 
 </resources>

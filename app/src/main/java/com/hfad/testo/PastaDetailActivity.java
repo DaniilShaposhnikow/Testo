@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -33,10 +35,10 @@ public class PastaDetailActivity extends AppCompatActivity {
         TextView textView = (TextView)findViewById(R.id.pasta_text);
         textView.setText(pastaName);
 
-        //int pastaImage = Pasta.pastas[pastaId].getImageResourceId();
-        /*Uri pastaImage = dbHelper.select(pastaId,"PASTA").getImageResourceId();
-        ImageView imageView = (ImageView) findViewById(R.id.pasta_image);
-        imageView.setImageDrawable(ContextCompat.getDrawable(this, pastaImage));
-        imageView.setContentDescription(pastaName);*/
+        Uri pizzaImage = dbHelper.select(pastaId, "PASTA").getImageResourceId();
+        ImageView imageView = (ImageView) findViewById(R.id.pizza_image);
+        Bitmap bitmap = BitmapFactory.decodeFile(pizzaImage.getPath(),null);
+        imageView.setImageBitmap(bitmap);
+        imageView.setContentDescription(pastaName);
     }
 }

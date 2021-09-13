@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DBHelper
 {
     private SQLiteDatabase db;
-    private final int DB_VERSION = 14;
+    private final int DB_VERSION = 18;
     private final String DB_NAME = "starbuzz";
 
     public DBHelper(Context context)

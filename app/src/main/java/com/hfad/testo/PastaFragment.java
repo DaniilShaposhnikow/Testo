@@ -3,9 +3,15 @@ package com.hfad.testo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,9 +25,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 
-public class PastaFragment extends Fragment {
+public class PastaFragment extends Fragment
+{
+    static final String NANE_PASTA ="name";
+    static final String URI_PASTA ="uri";
     private DBHelper db;
     private RecyclerView rv;
+    private AppCompatButton add;
+    private CaptionedImagesAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +55,38 @@ public class PastaFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-        return pizzaRecycler;
 
+        add = pizzaRecycler.findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getActivity(), PastaAddActivity.class);
+                StartFoResult.launch(intent);
+            }
+        });
+        return pizzaRecycler;
     }
+    ActivityResultLauncher<Intent> StartFoResult=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode()== Activity.RESULT_OK){
+                Intent intent = result.getData();
+                String name = intent.getStringExtra(NANE_PASTA);
+                Uri uri=Uri.parse(intent.getStringExtra(URI_PASTA));
+                db.insertDrink(name,uri.toString(),"PASTA");
+                UpdateAdapter();
+            }
+        }
+    });
+
+    private void UpdateAdapter()
+    {
+        adapter=null;
+        adapter = new CaptionedImagesAdapter(db.selectAll("PASTA"));
+        adapter.notifyDataSetChanged();
+        rv.setAdapter(adapter);
+    }
+
 }

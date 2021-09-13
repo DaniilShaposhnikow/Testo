@@ -19,9 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Testo">
         <activity
+            android:name=".PastaAddActivity"
+            android:exported="true" />
+        <activity
             android:name=".PastaDetailActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".PizzaAddActivity"
             android:exported="true" />
@@ -49,7 +52,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/files"></meta-data>
+                android:resource="@xml/files" />
         </provider>
     </application>
 

@@ -4,16 +4,13 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Session2Command;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,45 +25,48 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PizzaAddActivity extends AppCompatActivity
+public class PastaAddActivity extends AppCompatActivity
 {
-
+    private Button photo;
     private Button ok;
-    private Button can;
-    private Button ph;
-    private ImageView pht;
-    private EditText addd;
-    private String currentPhotoPath;
+    private Button cancel;
+    private EditText text;
+    private ImageView image;
     private File photoFile;
+    private String currentPhotoPath;
     private  Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pizza_add);
+        setContentView(R.layout.activity_pasta_add);
 
-        ok = findViewById(R.id.Ok);
-        can = findViewById(R.id.Cancel);
-        ph = findViewById(R.id.Photo);
-        pht = findViewById(R.id.Photos);
-        addd = findViewById(R.id.Addd);
+        photo = findViewById(R.id.photo);
+        ok = findViewById(R.id.ok);
+        cancel = findViewById(R.id.cancel);
+        text = findViewById(R.id.text);
+        image = findViewById(R.id.image);
 
-        ph.setOnClickListener(new View.OnClickListener() {
+        photo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    // Create the File where the photo should go
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(intent.resolveActivity(getPackageManager()) != null)
+                {
                     photoFile = null;
-                    try {
+                    try
+                    {
                         photoFile = createImageFile();
-                    } catch (IOException ex) {
-                        // Error occurred while creating the File
                     }
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-                        Uri photoURI = FileProvider.getUriForFile(PizzaAddActivity.this,
+                    catch (IOException ex)
+                    {
+
+                    }
+                    if (photoFile != null)
+                    {
+                        Uri photoURI = FileProvider.getUriForFile(PastaAddActivity.this,
                                 "com.hfad.testo.fileprovider",
                                 photoFile);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -75,25 +75,26 @@ public class PizzaAddActivity extends AppCompatActivity
                 }
             }
         });
+
         ok.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Intent data = new Intent();
-                data.putExtra(PizzaFragment.NANE_PIZZA, addd.getText().toString());
-                data.putExtra(PizzaFragment.URI_PIZZA, uri.toString());
+                data.putExtra(PastaFragment.NANE_PASTA, text.getText().toString());
+                data.putExtra(PastaFragment.URI_PASTA, uri.toString());
                 setResult(RESULT_OK, data);
                 finish();
             }
         });
     }
-    //Intent in call Camera
 
     ActivityResultLauncher<Intent> StartFoResult=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode()== Activity.RESULT_OK){
-                uri = FileProvider.getUriForFile(PizzaAddActivity.this,
+                uri = FileProvider.getUriForFile(PastaAddActivity.this,
                         "com.hfad.testo.fileprovider",
                         photoFile);
                 revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -101,14 +102,14 @@ public class PizzaAddActivity extends AppCompatActivity
             }
         }
     });
-    //Photo + exciz
 
     private void updatePhotoView() {
-        if (photoFile == null || !photoFile.exists()) {
-            pht.setImageDrawable(null);
+        if (photoFile == null || !photoFile.exists())
+        {
+            image.setImageDrawable(null);
         } else {
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(),null);
-            pht.setImageBitmap(bitmap);
+            image.setImageBitmap(bitmap);
         }
     }
 
@@ -127,5 +128,4 @@ public class PizzaAddActivity extends AppCompatActivity
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-    //Create a photo
 }

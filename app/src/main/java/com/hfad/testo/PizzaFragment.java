@@ -79,6 +79,7 @@ public class PizzaFragment extends Fragment {
         });
         return pizzaRecycler;
     }
+
     ActivityResultLauncher<Intent> StartFoResult=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -91,6 +92,7 @@ public class PizzaFragment extends Fragment {
             }
         }
     });
+
     private void UpdateAdapter()
     {
         adapter=null;
